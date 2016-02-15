@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="RegisterDevice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="enableTile" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="enableToast" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeZoneOffset" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="accentColor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="channelURI" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="commutes" type="ArrayOfCommuteDefinition" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCommuteDefinition">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CommuteDefinition" nillable="true" type="CommuteDefinition" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CommuteDefinition">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s1:guid" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsNew" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartPoint" type="RouteLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndPoint" type="RouteLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="Routes" type="ArrayOfRouteDefinition" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DepartureTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReturnTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="DaysOfWeek" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdatedRet" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="History" type="CommuteHistory" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RouteLocation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Location" type="GpsLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GpsLocation">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Latitude" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Longitude" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="Altitude" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRouteDefinition">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RouteDefinition" nillable="true" type="RouteDefinition" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RouteDefinition">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="WayPoints" type="ArrayOfRouteLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="RoutePoints" type="ArrayOfGpsLocation" />
+          <s:element minOccurs="0" maxOccurs="1" name="Directions" type="ArrayOfRouteDirection" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AvoidanceMeasures" type="RouteAvoid" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedDuration" type="TimeSpan" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedDurationMinutes" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedDistance" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedRetDuration" type="TimeSpan" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedDurationRetMinutes" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="EstimatedRetDistance" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastUpdated" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRouteLocation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RouteLocation" nillable="true" type="RouteLocation" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfGpsLocation">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GpsLocation" nillable="true" type="GpsLocation" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRouteDirection">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RouteDirection" nillable="true" type="RouteDirection" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RouteDirection">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Action" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="RouteAvoid">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="AvoidHighways" />
+          <s:enumeration value="AvoidTolls" />
+          <s:enumeration value="MinimizeHighways" />
+          <s:enumeration value="MinimizeTolls" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="TimeSpan" />
+      <s:complexType name="CommuteHistory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Routes" type="ArrayOfRouteHistory" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRouteHistory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RouteHistory" nillable="true" type="RouteHistory" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RouteHistory">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RouteId" type="s1:guid" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartureAverages" type="ArrayOfRouteHistoryDay" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReturnAverages" type="ArrayOfRouteHistoryDay" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfRouteHistoryDay">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RouteHistoryDay" nillable="true" type="RouteHistoryDay" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RouteHistoryDay">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Day" type="DayOfWeek" />
+          <s:element minOccurs="1" maxOccurs="1" name="Minutes" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="DayOfWeek">
+        <s:restriction base="s:string">
+          <s:enumeration value="Sunday" />
+          <s:enumeration value="Monday" />
+          <s:enumeration value="Tuesday" />
+          <s:enumeration value="Wednesday" />
+          <s:enumeration value="Thursday" />
+          <s:enumeration value="Friday" />
+          <s:enumeration value="Saturday" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="RegisterDeviceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegisterDeviceResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Test">
+        <s:complexType />
+      </s:element>
+      <s:element name="TestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestResult" type="CommuteHistory" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RequestTileUpdate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="channelURI" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="imageURI" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RequestTileUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RequestTileUpdateResult" type="NotificationResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="NotificationResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="NotificationStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubscriptionStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeviceConnectionStatus" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCommuteHistory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="commuteId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCommuteHistoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCommuteHistoryResult" type="CommuteHistory" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ClearCommuteHistory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="commuteId" type="s1:guid" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ClearCommuteHistoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ClearCommuteHistoryResult" type="CommuteHistory" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCommute">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="commute" type="CommuteDefinition" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCommuteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddCommuteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddRoute">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="deviceId" type="s1:guid" />
+            <s:element minOccurs="1" maxOccurs="1" name="commuteId" type="s1:guid" />
+            <s:element minOccurs="0" maxOccurs="1" name="route" type="RouteDefinition" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddRouteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddRouteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CommuteHistory" nillable="true" type="CommuteHistory" />
+      <s:element name="NotificationResponse" nillable="true" type="NotificationResponse" />
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterDeviceSoapIn">
+    <wsdl:part name="parameters" element="RegisterDevice" />
+  </wsdl:message>
+  <wsdl:message name="RegisterDeviceSoapOut">
+    <wsdl:part name="parameters" element="RegisterDeviceResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestSoapIn">
+    <wsdl:part name="parameters" element="Test" />
+  </wsdl:message>
+  <wsdl:message name="TestSoapOut">
+    <wsdl:part name="parameters" element="TestResponse" />
+  </wsdl:message>
+  <wsdl:message name="RequestTileUpdateSoapIn">
+    <wsdl:part name="parameters" element="RequestTileUpdate" />
+  </wsdl:message>
+  <wsdl:message name="RequestTileUpdateSoapOut">
+    <wsdl:part name="parameters" element="RequestTileUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCommuteHistorySoapIn">
+    <wsdl:part name="parameters" element="GetCommuteHistory" />
+  </wsdl:message>
+  <wsdl:message name="GetCommuteHistorySoapOut">
+    <wsdl:part name="parameters" element="GetCommuteHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ClearCommuteHistorySoapIn">
+    <wsdl:part name="parameters" element="ClearCommuteHistory" />
+  </wsdl:message>
+  <wsdl:message name="ClearCommuteHistorySoapOut">
+    <wsdl:part name="parameters" element="ClearCommuteHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddCommuteSoapIn">
+    <wsdl:part name="parameters" element="AddCommute" />
+  </wsdl:message>
+  <wsdl:message name="AddCommuteSoapOut">
+    <wsdl:part name="parameters" element="AddCommuteResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddRouteSoapIn">
+    <wsdl:part name="parameters" element="AddRoute" />
+  </wsdl:message>
+  <wsdl:message name="AddRouteSoapOut">
+    <wsdl:part name="parameters" element="AddRouteResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestHttpGetIn" />
+  <wsdl:message name="TestHttpGetOut">
+    <wsdl:part name="Body" element="CommuteHistory" />
+  </wsdl:message>
+  <wsdl:message name="RequestTileUpdateHttpGetIn">
+    <wsdl:part name="channelURI" type="s:string" />
+    <wsdl:part name="imageURI" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RequestTileUpdateHttpGetOut">
+    <wsdl:part name="Body" element="NotificationResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestHttpPostIn" />
+  <wsdl:message name="TestHttpPostOut">
+    <wsdl:part name="Body" element="CommuteHistory" />
+  </wsdl:message>
+  <wsdl:message name="RequestTileUpdateHttpPostIn">
+    <wsdl:part name="channelURI" type="s:string" />
+    <wsdl:part name="imageURI" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RequestTileUpdateHttpPostOut">
+    <wsdl:part name="Body" element="NotificationResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CommuterSoap">
+    <wsdl:operation name="RegisterDevice">
+      <wsdl:input message="RegisterDeviceSoapIn" />
+      <wsdl:output message="RegisterDeviceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Test">
+      <wsdl:input message="TestSoapIn" />
+      <wsdl:output message="TestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestTileUpdate">
+      <wsdl:input message="RequestTileUpdateSoapIn" />
+      <wsdl:output message="RequestTileUpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCommuteHistory">
+      <wsdl:input message="GetCommuteHistorySoapIn" />
+      <wsdl:output message="GetCommuteHistorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ClearCommuteHistory">
+      <wsdl:input message="ClearCommuteHistorySoapIn" />
+      <wsdl:output message="ClearCommuteHistorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCommute">
+      <wsdl:input message="AddCommuteSoapIn" />
+      <wsdl:output message="AddCommuteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddRoute">
+      <wsdl:input message="AddRouteSoapIn" />
+      <wsdl:output message="AddRouteSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CommuterHttpGet">
+    <wsdl:operation name="Test">
+      <wsdl:input message="TestHttpGetIn" />
+      <wsdl:output message="TestHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestTileUpdate">
+      <wsdl:input message="RequestTileUpdateHttpGetIn" />
+      <wsdl:output message="RequestTileUpdateHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CommuterHttpPost">
+    <wsdl:operation name="Test">
+      <wsdl:input message="TestHttpPostIn" />
+      <wsdl:output message="TestHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RequestTileUpdate">
+      <wsdl:input message="RequestTileUpdateHttpPostIn" />
+      <wsdl:output message="RequestTileUpdateHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CommuterSoap" type="CommuterSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterDevice">
+      <soap:operation soapAction="/RegisterDevice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Test">
+      <soap:operation soapAction="/Test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestTileUpdate">
+      <soap:operation soapAction="/RequestTileUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommuteHistory">
+      <soap:operation soapAction="/GetCommuteHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClearCommuteHistory">
+      <soap:operation soapAction="/ClearCommuteHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCommute">
+      <soap:operation soapAction="/AddCommute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRoute">
+      <soap:operation soapAction="/AddRoute" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CommuterSoap12" type="CommuterSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterDevice">
+      <soap12:operation soapAction="/RegisterDevice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Test">
+      <soap12:operation soapAction="/Test" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestTileUpdate">
+      <soap12:operation soapAction="/RequestTileUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCommuteHistory">
+      <soap12:operation soapAction="/GetCommuteHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClearCommuteHistory">
+      <soap12:operation soapAction="/ClearCommuteHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCommute">
+      <soap12:operation soapAction="/AddCommute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRoute">
+      <soap12:operation soapAction="/AddRoute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CommuterHttpGet" type="CommuterHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="Test">
+      <http:operation location="/Test" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestTileUpdate">
+      <http:operation location="/RequestTileUpdate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CommuterHttpPost" type="CommuterHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="Test">
+      <http:operation location="/Test" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RequestTileUpdate">
+      <http:operation location="/RequestTileUpdate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Commuter">
+    <wsdl:port name="CommuterSoap" binding="CommuterSoap">
+      <soap:address location="http://www.mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CommuterSoap12" binding="CommuterSoap12">
+      <soap12:address location="http://www.mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CommuterHttpGet" binding="CommuterHttpGet">
+      <http:address location="http://www.mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CommuterHttpPost" binding="CommuterHttpPost">
+      <http:address location="http://www.mobilesrc.com/commuter/commuter.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

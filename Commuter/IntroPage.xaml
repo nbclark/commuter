@@ -1,0 +1,163 @@
+﻿<local:CustomPhoneApplicationPage
+    x:Class="Commuter.IntroPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:PhoneToolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:commuter="clr-namespace:Commuter"
+    xmlns:local="clr-namespace:Commuter"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+    
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Themes/generic.xaml"></ResourceDictionary>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+
+        <!--Panorama Control-->
+        <controls:Panorama Title="COMMUTER" x:Name="pivotControl" Visibility="Visible">
+            <controls:Panorama.Background>
+                <ImageBrush ImageSource="samplePhoto.jpg" Opacity="0.25"/>
+            </controls:Panorama.Background>
+            <!--Panorama item one-->
+            <controls:PanoramaItem Header="commutes">
+                <controls:PanoramaItem.Header>
+                    <Grid Width="410">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="70"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="commutes"></TextBlock>
+
+                        <Button VerticalAlignment="Bottom" Margin="0,0,0,10" Tag="{Binding BindsDirectlyToSource=True}" Visibility="{Binding BindsDirectlyToSource=True}" Grid.Column="1" x:Name="addCommuteButton" Height="60" Width="60" Style="{StaticResource PhoneButton}" BorderThickness="0" Click="addCommuteButton_Click">
+                            <ContentControl>
+                                <Border BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="3" CornerRadius="100" Background="Black">
+                                    <Image Source="/AppBar/appbar.add.rest.png" Stretch="None"></Image>
+                                </Border>
+                            </ContentControl>
+                        </Button>
+                    </Grid>
+                </controls:PanoramaItem.Header>
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+                    <ListBox IsEnabled="true"
+			    x:Name="commuterList"
+			    ScrollViewer.VerticalScrollBarVisibility="Visible"
+			    HorizontalContentAlignment="Left" FontSize="50" Margin="1" Padding="10" SelectionChanged="commuterList_SelectionChanged">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition Width="0"></ColumnDefinition>
+                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Name, Mode=OneWay}" Tag="{Binding}"></TextBlock>
+<!--
+                                    <Button Tag="{Binding BindsDirectlyToSource=True}" Visibility="{Binding BindsDirectlyToSource=True}" Grid.Column="1" x:Name="refreshButton" Height="60" Width="60" Style="{StaticResource PhoneButton}" BorderThickness="0" Click="refreshButton_Click">
+                                        <ContentControl>
+                                            <Border BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="3" CornerRadius="100" Background="Black">
+                                                <Image Source="/AppBar/appbar.refresh.rest.png" Stretch="None"></Image>
+                                            </Border>
+                                        </ContentControl>
+                                    </Button>
+-->
+                                    <Button Tag="{Binding BindsDirectlyToSource=True}" Visibility="{Binding BindsDirectlyToSource=True}" Grid.Column="2" x:Name="deleteButton" Height="60" Width="60" Style="{StaticResource PhoneButton}" BorderThickness="0" Click="deleteButton_Click">
+                                        <ContentControl>
+                                            <Border BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="3" CornerRadius="100" Background="Black">
+                                                <Image Source="/AppBar/appbar.delete.rest.png" Stretch="None"></Image>
+                                            </Border>
+                                        </ContentControl>
+                                    </Button>
+                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding BindsDirectlyToSource=True, Converter={StaticResource CommuterOverviewConverter}, ConverterParameter=true, Mode=OneWay}" FontSize="20"></TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding BindsDirectlyToSource=True, Converter={StaticResource CommuterOverviewConverter}, ConverterParameter=false, Mode=OneWay}" FontSize="20"></TextBlock>
+                                    <TextBlock Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding BindsDirectlyToSource=True, Converter={StaticResource CommuterTimeConverter}, Mode=OneWay}" FontSize="20"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <HyperlinkButton Visibility="Collapsed" Margin="0,20,0,0" Padding="0" x:Name="addItemLink" HorizontalAlignment="Left" Content="add commute..." FontSize="30" Click="addItemLink_Click"></HyperlinkButton>
+                </StackPanel>
+            </controls:PanoramaItem>
+
+            <!--Panorama item two-->
+            <controls:PanoramaItem Header="settings">
+                <StackPanel>
+                    <PhoneToolkit:ToggleSwitch x:Name="enableTileSwitch" Header="Enable Live Tile Updates"></PhoneToolkit:ToggleSwitch>
+                    <PhoneToolkit:ToggleSwitch x:Name="enableToastSwitch" Header="Enable Toast Notifications"></PhoneToolkit:ToggleSwitch>
+                </StackPanel>
+            </controls:PanoramaItem>
+
+            <!--Panorama item two-->
+            <controls:PanoramaItem Header="help">
+                <Grid>
+                    <StackPanel>
+
+                        <TextBlock FontSize="24" Padding="10" TextWrapping="Wrap">
+                            Commuter is designed to help make your daily
+                            commute less stressful, by notifying you which route
+                            of your commute is faster.
+                        </TextBlock>
+                        <TextBlock FontSize="24" Padding="10" TextWrapping="Wrap">
+                            Commuter makes it easy to:
+                        </TextBlock>
+                        <TextBlock Padding="40,5,10,5" FontSize="18" Text="Get route recommendations" TextWrapping="Wrap"/>
+                        <TextBlock Padding="40,5,10,5" FontSize="18" Text="Reduce your daily commute" TextWrapping="Wrap"/>
+                        <TextBlock Padding="40,5,10,5" FontSize="18" Text="Avoid unpredictable traffic" TextWrapping="Wrap"/>
+                        <TextBlock Padding="40,5,10,5" FontSize="18" Text="Learn about alternative routes" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <HyperlinkButton Margin="0,0,0,15" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="{StaticResource PhoneAccentBrush}" Content="http://www.mobilesrc.com/" x:Name="mobilesrcLink" Click="mobilesrcLink_Click">
+                    </HyperlinkButton>
+                </Grid>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+    </Grid>
+
+    <!--Sample code showing usage of ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+    
+</local:CustomPhoneApplicationPage>

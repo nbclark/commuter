@@ -1,0 +1,115 @@
+﻿<local:CustomPhoneApplicationPage x:Class="Commuter.TimePicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:navigation="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Commuter"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="728" d:DesignWidth="480">
+
+    <navigation:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBarIconButton x:Name="okButton" Text="Save" IconUri="/AppBar/appbar.check.rest.png" Click="okButton_Click" IsEnabled="True"/>
+            <shell:ApplicationBarIconButton x:Name="cancelButton" Text="Cancel" IconUri="/AppBar/appbar.cancel.rest.png" Click="cancelButton_Click" IsEnabled="True"/>
+        </shell:ApplicationBar>
+    </navigation:PhoneApplicationPage.ApplicationBar>
+    
+    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}"
+		Height="800"
+		Width="480">
+
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Themes/generic.xaml"></ResourceDictionary>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="90"></ColumnDefinition>
+            <ColumnDefinition Width="90"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition Height="110"></RowDefinition>
+            <RowDefinition Height="90"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Select Time" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+
+        <TextBlock Text=":" Grid.Row="2" Grid.Column="1" FontSize="75" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Text="" Grid.Row="2" Grid.Column="4" FontSize="75" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+        <!-- Hour -->
+        <Button Width="80" Height="80" Tag="Hour" Opacity="0.75" Click="upbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="hourUpbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Row="1" BorderThickness="1">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.add.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+
+        <TextBlock x:Name="hourLabel" Text="12" Grid.Row="2" Grid.Column="0" FontSize="75" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+        <Button Width="80" Height="80" Tag="Hour" Opacity="0.75" Click="downbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="hourDownbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Row="3">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.minus.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+
+        <!-- MinuteTen -->
+        <Button Width="80" Height="80" Tag="MinuteTen" Opacity="0.75" Click="upbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="minuteTenUpbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Column="2" Grid.Row="1" BorderThickness="1">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.add.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+
+        <TextBlock x:Name="minuteTenLabel" Text="3" Grid.Row="2" Grid.Column="2" FontSize="75" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+        <Button Width="80" Height="80" Tag="MinuteTen" Opacity="0.75" Click="downbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="minuteTenDownbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Column="2" Grid.Row="3">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.minus.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+
+        <!-- Minute One -->
+        <Button Width="80" Height="80" Tag="MinuteOne" Opacity="0.75" Click="upbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="minuteOneUpbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Column="3" Grid.Row="1" BorderThickness="1">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.add.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+
+        <TextBlock x:Name="minuteOneLabel" Text="5" Grid.Row="2" Grid.Column="3" FontSize="75" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+        <Button Width="80" Height="80" Tag="MinuteOne" Opacity="0.75" Click="downbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="minuteOneDownbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Column="3" Grid.Row="3">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.minus.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+
+        <!-- ampm -->
+        <Button Width="80" Height="80" Tag="AmPm" Opacity="0.75" Click="upbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="ampmUpbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="5" BorderThickness="1">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.add.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+
+        <TextBlock x:Name="ampmLabel" Text="PM" Grid.Row="2" Grid.Column="5" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+        <Button Width="80" Height="80" Tag="AmPm" Opacity="0.75" Click="downbutton_Click" Style="{StaticResource PhoneButton}" Background="#FF000019" HorizontalAlignment="Center" Name="ampmDownbutton" VerticalAlignment="Center" Grid.ColumnSpan="1" Grid.Column="5" Grid.Row="3">
+            <ContentControl>
+                <Image Source="/AppBar/appbar.minus.rest.png" Stretch="None"></Image>
+            </ContentControl>
+        </Button>
+    </Grid>
+</local:CustomPhoneApplicationPage>

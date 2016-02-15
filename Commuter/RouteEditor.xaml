@@ -1,0 +1,124 @@
+﻿<local:CustomPhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:navigation="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:phoneNavigation="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:ptoolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:local="clr-namespace:Commuter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Microsoft_Maps_MapControl="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
+    x:Class="Commuter.RouteEditor"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Background="{StaticResource PhoneBackgroundBrush}"
+    mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480">
+
+  <navigation:PhoneApplicationPage.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Themes/generic.xaml"></ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </navigation:PhoneApplicationPage.Resources>
+
+  <phoneNavigation:PhoneApplicationPage.ApplicationBar>
+    <shell:ApplicationBar IsVisible="True" x:Name="appBar">
+      <shell:ApplicationBarIconButton x:Name="closeButton" Text="Refresh" IconUri="/AppBar/appbar.check.rest.png" Click="closeButton_Click" IsEnabled="True"/>
+    </shell:ApplicationBar>
+  </phoneNavigation:PhoneApplicationPage.ApplicationBar>
+
+  <Grid x:Name="LayoutRoot"
+  Background="{StaticResource PhoneBackgroundBrush}"
+  Height="800"
+  Width="480"
+          >
+    <Grid.RowDefinitions>
+      <RowDefinition Height="80"></RowDefinition>
+      <RowDefinition Height="100"></RowDefinition>
+      <RowDefinition Height="*"></RowDefinition>
+      <RowDefinition Height="240"></RowDefinition>
+    </Grid.RowDefinitions>
+
+    <Grid VerticalAlignment="Top" Height="80" Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <TextBox x:Name="nameTextBox" InputScope="Text" Grid.Column="0" Text="backroads" Style="{StaticResource PhoneTextBox}" Background="Transparent" BorderThickness="0" Margin="5,5,5,5" FontSize="48" Height="70" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
+    </Grid>
+
+    <StackPanel Orientation="Vertical" Grid.Row="1">
+      <ptoolkit:ListPicker x:Name="highwayToggle" ItemCountThreshold="1" ListPickerMode="Full" Margin="0,0,0,0" Header="route customization" FullModeHeader="specify route customization" />
+    </StackPanel>
+
+    <Microsoft_Maps_MapControl:Map CredentialsProvider="AviYccEd2qfMoBG8NMmsl4F3LCL7Q25GPxS4AcwUcg6kFyraTzUvBsBdDYNxa9zV" x:Name="BingMap" Grid.Row="2" VerticalContentAlignment="Stretch" Margin="0">
+      <Grid x:Name="BingGrid"></Grid>
+      <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+        <Button x:Name="zoomInButton" Width="60" Height="60" Background="Black" Opacity=".00" Padding="0" Margin="0,10,10,0" Style="{StaticResource PhoneButton}" Click="zoomInButton_Click">
+          <ContentControl Margin="0,0,0,0" Padding="0,0,0,0">
+            <Image Source="/AppBar/appbar.add.rest.png" Stretch="None"></Image>
+          </ContentControl>
+        </Button>
+        <Button x:Name="zoomOutButton" Width="60" Height="60" Background="Black" Opacity=".00" Padding="0" Margin="0,10,10,0" Style="{StaticResource PhoneButton}" Click="zoomOutButton_Click">
+          <ContentControl Margin="0,0,0,0" Padding="0,0,0,0">
+            <Image Source="/AppBar/appbar.minus.rest.png" Stretch="None"></Image>
+          </ContentControl>
+        </Button>
+      </StackPanel>
+    </Microsoft_Maps_MapControl:Map>
+
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="3">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="38"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+      </Grid.RowDefinitions>
+      <TextBlock Grid.Row="0" Height="38" Name="textBlock1" Text="Routed Roads (tap+hold map)" FontSize="32" Margin="5,0,0,0" />
+      <ListBox
+          Grid.Row="1"
+x:Name="wayPointList"
+ScrollViewer.VerticalScrollBarVisibility="Visible"
+HorizontalContentAlignment="Left" FontSize="36.667" Margin="1" Padding="1">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Vertical"/>
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemContainerStyle>
+          <Style TargetType="ListBoxItem">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                  <ContentPresenter/>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </ListBox.ItemContainerStyle>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Grid Width="480">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="360"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+              </Grid.ColumnDefinitions>
+              <TextBlock Grid.Column="0"
+    HorizontalAlignment="Left" VerticalAlignment="Top"
+    Style="{StaticResource PhoneTextNormalStyle}"
+    Margin="5,0,5,0"
+    FontSize="30"
+    Text="{Binding Address, Mode=OneWay}"/>
+              <HyperlinkButton Grid.Column="1"
+    HorizontalAlignment="Right" VerticalAlignment="Top"
+    FontSize="30"
+                  Height="34"
+                  Tag="{Binding}"
+                  Click="HyperlinkButton_Click"
+    Content="Delete"/>
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Grid>
+  </Grid>
+</local:CustomPhoneApplicationPage>
